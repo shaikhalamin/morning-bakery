@@ -1,0 +1,54 @@
+.ft30 {
+  font-size: 30px;
+}
+.pTypeBody {
+  transition: box-shadow 0.3s;
+}
+.pTypeBody:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.pTypeText {
+  transition: box-shadow 0.3s;
+  font-size: 18px;
+  color: #212a3a;
+  text-decoration: none;
+}
+.pTypeText:hover {
+  color: #00f09a;
+}
+
+.pCount {
+  font-size: 14px;
+  color: #858b94;
+  text-decoration: none;
+}
+
+.featureViewMore {
+  color: #00f09a;
+}
+
+.featureViewMore:hover {
+  text-decoration: underline;
+  color: #00f09a;
+}
+
+.propertyIcon {
+  margin: 0px 3px 0px 0px;
+}
+
+.propertyIcon svg {
+  fill: #00f09a;
+  padding: 2px;
+  width: 23px;
+  height: 23px;
+}
+
+.marginLeft0 {
+  margin-left: 0px !important;
+}
+.marginRight0 {
+  margin-right: 0px !important;
+}
+
+

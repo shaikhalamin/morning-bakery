@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  property_finder_fe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: yarn dev
+    container_name: property_finder_fe_container
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '8085:3000'
+    environment:
+      TZ: Asia/Dhaka

@@ -1,0 +1,25 @@
+.propertyIcon {
+  margin: 0px 3px 0px 0px;
+}
+
+.propertyIcon svg {
+  fill: #00f09a;
+  padding: 2px;
+  width: 23px;
+  height: 23px;
+}
+
+.bannerImage {
+  background-image: url("../../../public/images/home_property_add_banner.png");
+  background-position: bottom center;
+  background-repeat: repeat-x;
+}
+
+.bannerHeight {
+  min-height: 140px !important;
+  height: 100%;
+}
+
+.bannerBgColor {
+  background-color: #05173a !important;
+}

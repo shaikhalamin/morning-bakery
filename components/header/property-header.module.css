@@ -1,0 +1,13 @@
+.headerHeight {
+  min-height: 450px !important;
+  height: 100%;
+}
+.headerBgColor {
+  background-color: #05173a !important;
+}
+
+.headerBgImage {
+  background-image: url("../../public/images/headerbg.png");
+  background-position: bottom center;
+  background-repeat: repeat-x;
+}

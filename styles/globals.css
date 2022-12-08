@@ -1,0 +1,132 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
+.ft-12 {
+  font-size: 12px;
+}
+.ft-13 {
+  font-size: 13px;
+}
+.ft-14 {
+  font-size: 14px;
+}
+
+.ft-15 {
+  font-size: 15px;
+}
+
+.ft-16 {
+  font-size: 16px;
+}
+.ft-17 {
+  font-size: 17px;
+}
+
+.ft-18 {
+  font-size: 18px;
+}
+
+.ft-20 {
+  font-size: 20px;
+}
+
+.ft-22 {
+  font-size: 22px;
+}
+
+.ft-24 {
+  font-size: 24px;
+}
+.ft-30 {
+  font-size: 30px;
+}
+
+.bg-color-09a {
+  background-color: #00f09a;
+}
+
+.bg-color-09a span {
+  background-color: #00f09a !important;
+  border: 1px solid #00f09a !important;
+}
+
+.agent-bg {
+  background-color: #05173a !important;
+}
+
+.text-color-bca {
+  color: #b3bbca;
+}
+
+.text-color-a3a {
+  color: #212a3a;
+}
+
+.text-color-3b3 {
+  color: #333333b3;
+}
+
+.text-color-b94 {
+  color: #858b94;
+}
+.text-color-09a {
+  color: #00f09a;
+}
+
+a.text-color-b94:hover {
+  color: #00f09a;
+}
+
+.text-color-333 {
+  color: #333;
+}
+
+.text-color-d12 {
+  color: #d12121;
+}
+
+.text-black {
+  color: #000;
+}
+
+a.text-black:hover {
+  color: #00f09a;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+}
+
+.text-underline-hover:hover {
+  padding-bottom: 2px;
+  border-bottom: 2px solid #d12121;
+}
+
+.image-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.image-container .image {
+  width: 100%;
+  height: 100%;
+  position: relative !important;
+  object-fit: cover;
+}
+
+button.list_loader:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.home-custom-border {
+  border-left: 1px solid rgba(0, 0, 0, 0.175) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.175) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.175) !important;
+}
+
+.min-height-150 {
+  min-height: 100px;
+}
