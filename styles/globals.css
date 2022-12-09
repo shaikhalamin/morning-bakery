@@ -130,3 +130,7 @@ button.list_loader:hover {
 .min-height-150 {
   min-height: 100px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

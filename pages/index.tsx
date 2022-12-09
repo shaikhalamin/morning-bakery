@@ -4,57 +4,39 @@ import Meta from "@/components/meta/Meta";
 import { GetServerSideProps } from "next";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
-import { Button, Card, Col, Nav, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Card, Col, Form, Modal, Row } from "react-bootstrap";
 import { NextPageWithLayout } from "./_app";
 import { Rating } from "react-simple-star-rating";
 import { Product } from "@/data/model/products";
 import { getProducts } from "@/data/api/products";
 import { StorageFile } from "@/data/model/storage-file";
-
-const categoryItems = [
-  {
-    name: "sweets",
-    key: "sweets",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Sweets-2-pc6q3xpc6vtbzxmue1dxv9a2wm6qn80iav6lfig2bs.png",
-  },
-  {
-    name: "cake",
-    key: "cake",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-11-pc6kpgve8tlq083xxz8m0bwyisoy5jzowca72ms9mw.png",
-  },
-  {
-    name: "bread/bun",
-    key: "bread-bun",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-9-pc6ktusa4zlw6pqkbvhxn82ebj2m2peli1vrp4a4lk.png",
-  },
-  {
-    name: "cookies",
-    key: "cookies",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-9-1-pcdis8gu3bpmvp373z2lx0iewh7amhcmbwccywakeg.png",
-  },
-  {
-    name: "biscuits",
-    key: "biscuits",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-8-pc6kr6wqrvynahltvq1zkw9dq8769ktz4vc8qw8a88.png",
-  },
-  {
-    name: "snacks",
-    key: "snacks",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-10-pce5e8p8ma0x6up5vtzl7loul12gi8we8utyldcvyg.png",
-  },
-  {
-    name: "others",
-    key: "others",
-    icon: "https://wellfoodonline.com/wp-content/uploads/elementor/thumbs/Asset-7-pcdibv4127auo6v9pebizn8efvw5k9cx2vax2ekers.png",
-  },
-];
+import { getStorageFiles } from "@/data/api/storage-files";
+import { getCategories } from "@/data/api/category";
+import { Category } from "@/data/model/category";
+import CategoryList from "@/components/home/CategoryList";
+import Loader from "@/components/common/loader/Loader";
+import { MdClose } from "react-icons/md";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import Cookies from "js-cookie";
 
 type ProductList = {
-  productsItems: Product[];
+  response: {
+    productsItems: Product[];
+    bannerFiles: StorageFile[];
+    categories: Category[];
+  };
 };
 
-const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
+type Cart = {
+  item: Product;
+  quantity: number;
+  price: number;
+};
+
+const Home: NextPageWithLayout<ProductList> = ({
+  response: { productsItems, bannerFiles, categories },
+}) => {
   const { data: session } = useSession();
   if (session) {
     //console.log(session)
@@ -62,16 +44,63 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
 
   const [products, setProducts] = useState<Product[]>(productsItems);
   const [rating, setRating] = useState(3);
+  const [modalShow, setModalShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [singleProduct, setSingleProduct] = useState<Product>();
+  const [cart, setCart] = useState<Cart[]>([]);
+
+  useEffect(() => {
+    cart.length > 0 && Cookies.set("cart", JSON.stringify(cart));
+
+    console.log("updated cookies", Cookies.get("cart") && JSON.parse(Cookies.get("cart") as string));
+
+  }, [cart]);
 
   const handleCategory = async (category: string) => {
-    //alert(category);
     try {
       const productFilterUrl = `?category=${category}`;
+      setLoading(true);
       const result = await getProducts(productFilterUrl);
+      setLoading(false);
       setProducts(result.data.data);
-      console.log(result.data);
     } catch (error) {
       console.log("error : ", error);
+    }
+  };
+
+  const showProductModal = (product: Product) => {
+    setSingleProduct(product);
+    setModalShow(true);
+    setQuantity(1);
+  };
+
+  const handleQuantity = (qty: number) => {
+    qty === 0 && quantity > 1 && setQuantity((prev) => prev - 1);
+    qty === 1 && setQuantity((prev) => prev + 1);
+  };
+
+  const handleCart = (product: Product, qty: number) => {
+    const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
+    const cartItem = {
+      item: product,
+      quantity: qty,
+      price: product.price * qty,
+    } as Cart;
+
+    if (findIndex != -1) {
+      cart.splice(findIndex, 1, cartItem);
+      setCart((prev) => [...prev]);
+    } else {
+      setCart((prev) => [...prev, cartItem]);
+    }
+  };
+
+  const deleteItemFromCart = (product: Product) => {
+    const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
+    if (findIndex != -1) {
+      cart.splice(findIndex, 1);
+      setCart((prev) => [...prev]);
     }
   };
 
@@ -82,48 +111,24 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
         content=" Best sweets and bakery items in dhaka,Bangladesh"
       />
       <header>
-        <HomeCarousel />
+        <HomeCarousel carouselItems={bannerFiles} />
       </header>
       <BaseContainer>
         <Row className="py-3 mt-2 mb-2 border-bottom">
           <Col md="12">
             <h1 className="text-center text-color-d12 ft-30 fw-bold mb-2 ">
-              Bakery Products & Categories{" "}
+              Bakery Products & Categories
             </h1>
           </Col>
         </Row>
-        <Row className="py-3">
-          <Col md="12">
-            <Nav className="justify-content-center" activeKey="/home">
-              {categoryItems.map((nav) => (
-                <Nav.Item key={nav.key}>
-                  <Nav.Link
-                    href={`#`}
-                    className="text-dark"
-                    onClick={() => handleCategory(nav.key)}
-                  >
-                    <div className="mb-2">
-                      {/*eslint-disable-next-line @next/next/no-img-element*/}
-                      <img
-                        src={nav.icon}
-                        alt={nav.name}
-                        className=" mx-auto d-block"
-                      />
-                    </div>
-                    <div>
-                      <span className="text-color-3b3 fw-bold ft-16 text-underline-hover">
-                        {nav.name.toUpperCase()}
-                      </span>
-                    </div>
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
-          </Col>
-        </Row>
+        <CategoryList
+          categoryItems={categories}
+          handleCategory={handleCategory}
+        />
         <Row className="py-2">
           <Col md="12">
             <Row>
+              {loading === true ? <Loader /> : ""}
               {products.length > 0 &&
                 products.map((product) => {
                   const imagePath =
@@ -171,7 +176,7 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
                                 className="text-start"
                               >
                                 <span className="badge bg-danger fs-12 fs-normal rounded-0 ">
-                                  ৳ {product.price.toFixed(2)}
+                                  ৳ {Number(product.price).toFixed(2)}
                                 </span>
                               </Col>
                             </Row>
@@ -183,6 +188,7 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
                             <Button
                               variant="danger"
                               className="text-center w-100"
+                              onClick={() => showProductModal(product)}
                             >
                               <span>Quick View</span>
                             </Button>
@@ -195,6 +201,126 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
             </Row>
           </Col>
         </Row>
+
+        <Modal
+          size="lg"
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          aria-labelledby="single-product-show"
+        >
+          <Modal.Body>
+            <Row>
+              <Col md="5">
+                <Card className="rounded-0">
+                  <Card.Body className="py-0 px-0 position-relative">
+                    <Image
+                      src={`${singleProduct?.storage_files[0].image_url ?? ""}`}
+                      alt={singleProduct?.name}
+                      width={283}
+                      height={283}
+                      layout="responsive"
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md="7">
+                <Row>
+                  <Col md="10" xs="10">
+                    <h4 className="ft-30 fw-normal text-dark mt-3">
+                      {singleProduct?.name}
+                    </h4>
+                  </Col>
+                  <Col md="2" xs="2">
+                    <MdClose
+                      size={19}
+                      className="mx-auto d-block border border-danger cursor-pointer mt-3"
+                      onClick={() => setModalShow(false)}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md="12">
+                    <h4 className="ft-16 text-color-d12 fw-bold mt-3 mb-3">
+                      ৳ {Number(singleProduct?.price).toFixed(2)}
+                    </h4>
+                    <h6 className="ft-15 text-dark fw-bold mt-2 mb-3">
+                      {singleProduct?.weight} gm
+                    </h6>
+                    <h6 className="ft-15 text-color-b94 fw-normal mt-3 mb-3">
+                      {singleProduct?.descriptions}
+                    </h6>
+                  </Col>
+                </Row>
+                <Row className="px-2">
+                  <Col md="7" className="mt-2 mb-2">
+                    <Row>
+                      <Col md="3" xs="3">
+                        <Button
+                          variant="outline-dark rounded-0"
+                          onClick={() => handleQuantity(0)}
+                        >
+                          <AiOutlineMinus size={19} />
+                        </Button>
+                      </Col>
+                      <Col md="6" xs="6">
+                        <Form.Group
+                          className="justify-content-center"
+                          controlId="formGroupEmail"
+                        >
+                          <Form.Control
+                            type="number"
+                            className="rounded-0 text-center"
+                            value={quantity}
+                            onChange={({ target }) => {
+                              if (
+                                Number(target.value) == 0 ||
+                                Number(target.value) > 0
+                              ) {
+                                setQuantity(+target.value);
+                              }
+                            }}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md="3" xs="3">
+                        <Button
+                          variant="outline-dark rounded-0"
+                          onClick={() => handleQuantity(1)}
+                        >
+                          <AiOutlinePlus size={19} />
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md="5" className="mt-2 mb-2">
+                    <Button
+                      variant="danger"
+                      className="text-center w-100 rounded-0 text-uppercase"
+                      onClick={() =>
+                        handleCart(singleProduct as Product, quantity)
+                      }
+                    >
+                      <span>Add To Cart</span>
+                    </Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    {cart.length > 0 &&
+                      cart.map((product) => (
+                        <div key={product.item.id} className="mt-3 mb-3 border">
+                          <h4 className="mt-2 mb-3">{product.item.name}</h4>
+                          <h4 className="mt-2 mb-3">{product.quantity}</h4>
+                          <h4 className="mt-2 mb-3">{product.price}</h4>
+                        </div>
+                      ))}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+
         <Row className="py-5 border-bottom mt-4">
           <Col md="8">
             <Card className="rounded-0">
@@ -246,10 +372,20 @@ const Home: NextPageWithLayout<ProductList> = ({ productsItems }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const productsUrl = `?per_page=12&category=sweets`;
-    const results = await getProducts(productsUrl);
-    console.log(results.data);
-    const productsItems = results.data.data;
-    return { props: { productsItems } };
+    const bannerImageUrl = `?type=banner`;
+
+    const [productRes, bannerFileRes, categoryRes] = await Promise.all([
+      getProducts(productsUrl),
+      getStorageFiles(bannerImageUrl),
+      getCategories(),
+    ]);
+    const response = {
+      productsItems: productRes.data.data,
+      bannerFiles: bannerFileRes.data.data,
+      categories: categoryRes.data.data,
+    };
+
+    return { props: { response } };
   } catch (error) {
     return {
       notFound: true,

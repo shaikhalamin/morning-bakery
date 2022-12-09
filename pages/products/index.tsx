@@ -5,6 +5,7 @@ import { Rating } from "react-simple-star-rating";
 import axios from "axios";
 import Image from "next/image";
 import { NextPageWithLayout } from "../_app";
+import { getProducts } from "@/data/api/products";
 
 type StorageFile = {
   id: number;
@@ -37,8 +38,7 @@ const Products: NextPageWithLayout = () => {
   const [rating, setRating] = useState(3);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/products")
+    getProducts()
       .then((res) => {
         setProducts(res.data.data);
       })
@@ -133,7 +133,7 @@ const Products: NextPageWithLayout = () => {
                             className="text-start"
                           >
                             <span className="badge bg-danger fs-12 fs-normal rounded-0 ">
-                              ৳ {product.price.toFixed(2)}
+                              ৳ {Number(product.price).toFixed(2)}
                             </span>
                           </Col>
                         </Row>
