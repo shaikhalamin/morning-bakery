@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { Agent } from "@/data/model/agent";
 
 export type BioAndDescriptionFields = {
   agentImage?: number;
@@ -20,14 +19,3 @@ export const bioAndDescriptionFieldsSchema = yup
     linkedin_link: yup.string().optional().nullable(),
   })
   .required();
-
-export const setBioAndDescriptionFormValue = (
-  setValue: CallableFunction,
-  agent?: Agent
-) => {
-  setValue("description", agent?.description);
-  setValue("fb_link", agent?.fb_link);
-  setValue("instagram_link", agent?.instagram_link);
-  setValue("twitter_link", agent?.twitter_link);
-  setValue("linkedin_link", agent?.linkedin_link);
-};

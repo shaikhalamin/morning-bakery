@@ -8,8 +8,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import BioAndDescription from "./BioAndDescription";
-import { setProfileFormValue } from "./user.helper";
+
 
 type ProfileBasicInfoProps = {
   user: User;
@@ -28,7 +27,7 @@ const ProfileBasicInfo: React.FC<ProfileBasicInfoProps> = ({ user }) => {
     mode: "onTouched",
   });
 
-  setProfileFormValue(setValue, user);
+
 
   const errorMessage = getErrorMessage(errors);
 
@@ -65,7 +64,7 @@ const ProfileBasicInfo: React.FC<ProfileBasicInfoProps> = ({ user }) => {
                   </h3>
                 </Col>
               </Row>
-              <BioAndDescription user={user} />
+              
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row className="py-3">
                   <Col md="12">

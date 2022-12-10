@@ -7,9 +7,6 @@ const Index = () => {
   )
 }
 
-
-
-
 Index.getLayout = function getLayout(page: ReactElement) {
     return <AdminLayout>{page}</AdminLayout>;
   };

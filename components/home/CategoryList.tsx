@@ -27,7 +27,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
                   <img
                     src={category.storage_file.image_url}
                     alt={category.name}
-                    className=" mx-auto d-block"
+                    className="mx-auto d-block"
                   />
                 </div>
                 <div>

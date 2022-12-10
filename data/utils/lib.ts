@@ -1,6 +1,10 @@
 import _ from "lodash";
 import qs from "qs";
-import { KeyValueObject } from "../api/property";
+
+export type KeyValueObject = {
+  [key: string]: string | number;
+};
+
 
 export const getErrorMessage = (errors: any) => {
   return (index: string) => {

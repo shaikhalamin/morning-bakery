@@ -9,10 +9,9 @@ import { getErrorMessage, removeFalsy } from "@/data/utils/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Card, Button, Form } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
-import { setProfileFormValue } from "./user.helper";
 
 type EditUserInfoProps = {
   user: User;
@@ -38,17 +37,16 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
     setValue,
   } = reactHookFormMethods;
 
-  useEffect(() => {
-    setProfileFormValue(setValue, user);
-  }, [user, setValue]);
-
   const errorMessage = getErrorMessage(errors);
 
   const onSubmit = async (data: EditUserFormFields) => {
     try {
       setLoading(true);
       const trimmedData = removeFalsy(data);
-      const result = await updateUser(user.id, trimmedData as EditUserFormFields);
+      const result = await updateUser(
+        user.id,
+        trimmedData as EditUserFormFields
+      );
       if (result.data) {
         router.push("/admin/users/");
       } else {

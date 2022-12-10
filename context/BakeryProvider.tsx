@@ -1,34 +1,29 @@
 import { Cart } from "@/data/model/cart";
 import { Product } from "@/data/model/products";
-import React, { ReactNode, useEffect, useReducer, useState } from "react";
+import { BlobOptions } from "buffer";
+import React, { ReactNode, useEffect, useState } from "react";
 import { BakeryContext } from "./BakeryContext";
-import Cookies from "js-cookie";
+import { getCartCookies, setCartCookies } from "./cookies";
 
 type BakeryProviderProps = {
   children: ReactNode;
 };
 
 const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
-  //const [state, dispatch] = useReducer(CampaignReducer, initialState);
-
   const [cart, setCart] = useState<Cart[]>([]);
   const [quantity, setQuantity] = useState(1);
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
-    if (Cookies.get("bakeryCartItems") !== undefined) {
-      const cartFromCookies = JSON.parse(
-        Cookies.get("bakeryCartItems") as string
-      ) as Cart[];
-      setCart(cartFromCookies);
-    }
+    setCart(getCartCookies());
   }, []);
 
   useEffect(() => {
-    cart.length > 0 && Cookies.set("bakeryCartItems", JSON.stringify(cart));
+    cart.length > 0 && setCartCookies(cart);
   }, [cart]);
 
   const setCurrentQuantity = (qty: number) => {
-    setQuantity(qty)
+    setQuantity(qty);
   };
 
   const handleCartQuantity = (qty: number) => {
@@ -36,12 +31,13 @@ const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
     qty === 1 && setQuantity((prev) => prev + 1);
   };
 
-  const handleCartItem = (product: Product) => {
+  const handleCartItem = (product: Product, qty: number) => {
     const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
+    console.log("updated quantity ", qty)
     const cartItem = {
       item: product,
-      quantity: quantity,
-      price: product.price * quantity,
+      quantity: qty,
+      price: product.price * qty,
     } as Cart;
 
     if (findIndex != -1) {
@@ -57,12 +53,21 @@ const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
     if (findIndex != -1) {
       cart.splice(findIndex, 1);
       setCart((prev) => [...prev]);
+      const cartFromCookies = getCartCookies();
+      cartFromCookies.splice(findIndex, 1);
+      setCartCookies(cartFromCookies);
     }
+  };
+
+  const setCartShow = (show: boolean) => {
+    setShowCart(show);
   };
 
   const value = {
     cartItems: cart,
     currentQuantity: quantity,
+    cartShow: showCart,
+    setCartShow,
     setCurrentQuantity,
     handleCartQuantity,
     handleCartItem,

@@ -9,11 +9,13 @@ import SubmitButton from "@/components/common/form/SubmitButton";
 import { useState } from "react";
 import { FaCartPlus, FaHeart } from "react-icons/fa";
 import { Badge } from "react-bootstrap";
+import { useBakeryContext } from "context/BakeryContext";
 
 const BakeryNavbar = () => {
   const router = useRouter();
   const [buttonRef, setButtonRef] = useState<number | string>("");
   const { data: session } = useSession();
+  const { cartItems, setCartShow } = useBakeryContext();
 
   return (
     <Navbar
@@ -49,7 +51,7 @@ const BakeryNavbar = () => {
               Home
             </Nav.Link>
             <Nav.Link
-              href="/products"
+              href="/products/all-items"
               className={`text-white ${styles.ft14} fw-normal`}
             >
               Products
@@ -96,12 +98,15 @@ const BakeryNavbar = () => {
               </span>
             </Nav.Link>
 
-            <Nav.Link href="#" className={`text-white ${styles.ft14}`}>
+            <Nav.Link
+              className={`text-white ${styles.ft14}`}
+              onClick={() => setCartShow(true)}
+            >
               <FaCartPlus size={18} />
               <span>
                 <sup className="text-white">
                   <Badge bg="danger" className={styles.ft10}>
-                    9
+                    {cartItems.length}
                   </Badge>
                 </sup>
               </span>

@@ -1,11 +1,12 @@
 import Head from "next/head";
+import CartOffCanvas from "../cart/CartOffCanvas";
 import Footer from "../footer/footer";
 import PropertyNavbar from "../navbar/bakery/BakeryNavbar";
 
 interface ChildProps {
   children: React.ReactNode;
 }
-const PropertyLayout: React.FC<ChildProps> = ({ children }) => {
+const BakeryLayout: React.FC<ChildProps> = ({ children }) => {
   return (
     <main>
       <Head>
@@ -13,10 +14,11 @@ const PropertyLayout: React.FC<ChildProps> = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <PropertyNavbar />
+      <CartOffCanvas />
       {children}
       <Footer />
     </main>
   );
 };
 
-export default PropertyLayout;
+export default BakeryLayout;
