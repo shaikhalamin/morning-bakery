@@ -19,6 +19,7 @@ import Loader from "@/components/common/loader/Loader";
 import { MdClose } from "react-icons/md";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import Cookies from "js-cookie";
+import { useBakeryContext } from "context/BakeryContext";
 
 type ProductList = {
   response: {
@@ -46,16 +47,16 @@ const Home: NextPageWithLayout<ProductList> = ({
   const [rating, setRating] = useState(3);
   const [modalShow, setModalShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [quantity, setQuantity] = useState(1);
   const [singleProduct, setSingleProduct] = useState<Product>();
-  const [cart, setCart] = useState<Cart[]>([]);
 
-  useEffect(() => {
-    cart.length > 0 && Cookies.set("cart", JSON.stringify(cart));
-
-    console.log("updated cookies", Cookies.get("cart") && JSON.parse(Cookies.get("cart") as string));
-
-  }, [cart]);
+  const {
+    cartItems,
+    currentQuantity,
+    handleCartQuantity,
+    setCurrentQuantity,
+    handleCartItem,
+    deleteCartItem,
+  } = useBakeryContext();
 
   const handleCategory = async (category: string) => {
     try {
@@ -72,36 +73,10 @@ const Home: NextPageWithLayout<ProductList> = ({
   const showProductModal = (product: Product) => {
     setSingleProduct(product);
     setModalShow(true);
-    setQuantity(1);
-  };
-
-  const handleQuantity = (qty: number) => {
-    qty === 0 && quantity > 1 && setQuantity((prev) => prev - 1);
-    qty === 1 && setQuantity((prev) => prev + 1);
-  };
-
-  const handleCart = (product: Product, qty: number) => {
-    const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
-    const cartItem = {
-      item: product,
-      quantity: qty,
-      price: product.price * qty,
-    } as Cart;
-
-    if (findIndex != -1) {
-      cart.splice(findIndex, 1, cartItem);
-      setCart((prev) => [...prev]);
-    } else {
-      setCart((prev) => [...prev, cartItem]);
-    }
-  };
-
-  const deleteItemFromCart = (product: Product) => {
-    const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
-    if (findIndex != -1) {
-      cart.splice(findIndex, 1);
-      setCart((prev) => [...prev]);
-    }
+    const findInCart = cartItems.find((cItem) => cItem.item.id === product.id);
+    findInCart
+      ? setCurrentQuantity(findInCart.quantity)
+      : setCurrentQuantity(1);
   };
 
   return (
@@ -125,6 +100,7 @@ const Home: NextPageWithLayout<ProductList> = ({
           categoryItems={categories}
           handleCategory={handleCategory}
         />
+
         <Row className="py-2">
           <Col md="12">
             <Row>
@@ -257,7 +233,7 @@ const Home: NextPageWithLayout<ProductList> = ({
                       <Col md="3" xs="3">
                         <Button
                           variant="outline-dark rounded-0"
-                          onClick={() => handleQuantity(0)}
+                          onClick={() => handleCartQuantity(0)}
                         >
                           <AiOutlineMinus size={19} />
                         </Button>
@@ -270,13 +246,13 @@ const Home: NextPageWithLayout<ProductList> = ({
                           <Form.Control
                             type="number"
                             className="rounded-0 text-center"
-                            value={quantity}
+                            value={currentQuantity}
                             onChange={({ target }) => {
                               if (
                                 Number(target.value) == 0 ||
                                 Number(target.value) > 0
                               ) {
-                                setQuantity(+target.value);
+                                setCurrentQuantity(+target.value);
                               }
                             }}
                           />
@@ -285,7 +261,7 @@ const Home: NextPageWithLayout<ProductList> = ({
                       <Col md="3" xs="3">
                         <Button
                           variant="outline-dark rounded-0"
-                          onClick={() => handleQuantity(1)}
+                          onClick={() => handleCartQuantity(1)}
                         >
                           <AiOutlinePlus size={19} />
                         </Button>
@@ -296,9 +272,7 @@ const Home: NextPageWithLayout<ProductList> = ({
                     <Button
                       variant="danger"
                       className="text-center w-100 rounded-0 text-uppercase"
-                      onClick={() =>
-                        handleCart(singleProduct as Product, quantity)
-                      }
+                      onClick={() => handleCartItem(singleProduct as Product)}
                     >
                       <span>Add To Cart</span>
                     </Button>
@@ -306,8 +280,8 @@ const Home: NextPageWithLayout<ProductList> = ({
                 </Row>
                 <Row>
                   <Col>
-                    {cart.length > 0 &&
-                      cart.map((product) => (
+                    {cartItems.length > 0 &&
+                      cartItems.map((product) => (
                         <div key={product.item.id} className="mt-3 mb-3 border">
                           <h4 className="mt-2 mb-3">{product.item.name}</h4>
                           <h4 className="mt-2 mb-3">{product.quantity}</h4>

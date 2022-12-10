@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PropertyLayout from "@/components/layouts/PropertyLayout";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import BakeryProvider from "context/BakeryProvider";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -27,9 +28,11 @@ const MyApp = ({
     return (
       <SessionProvider session={session} refetchInterval={5 * 60}>
         <SSRProvider>
-          <PropertyLayout>
-            <Component {...allProps} />
-          </PropertyLayout>
+          <BakeryProvider>
+            <PropertyLayout>
+              <Component {...allProps} />
+            </PropertyLayout>
+          </BakeryProvider>
         </SSRProvider>
       </SessionProvider>
     );
@@ -37,7 +40,9 @@ const MyApp = ({
 
   const layoutWrapper = getLayout(
     <SSRProvider>
-      <Component {...allProps} />
+      <BakeryProvider>
+        <Component {...allProps} />
+      </BakeryProvider>
     </SSRProvider>
   );
 
