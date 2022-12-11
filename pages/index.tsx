@@ -21,11 +21,12 @@ type ProductList = {
     productsItems: Product[];
     bannerFiles: StorageFile[];
     categories: Category[];
+    homeBanner: StorageFile[];
   };
 };
 
 const Home: NextPageWithLayout<ProductList> = ({
-  response: { productsItems, bannerFiles, categories },
+  response: { productsItems, bannerFiles, categories, homeBanner },
 }) => {
   const { data: session } = useSession();
   if (session) {
@@ -74,42 +75,50 @@ const Home: NextPageWithLayout<ProductList> = ({
         <ProductList products={products} loading={loading} />
 
         <Row className="py-5 border-bottom mt-4">
-          <Col md="8">
+          <Col md="6">
             <Card className="rounded-0">
               <Card.Body className="py-0 px-0">
                 {/*eslint-disable-next-line @next/next/no-img-element*/}
                 <img
-                  src="https://res.cloudinary.com/deundpsr2/image/upload/v1670502325/bakery/category_local/f7ffsy3aoeib1kzezsry.jpg"
+                  src={homeBanner.length > 0 ? homeBanner[0].image_url : ""}
                   alt="cake"
-                  className="img-fluid"
+                  className="mx-auto d-block mt-3 mb-3 img-fluid"
                 />
               </Card.Body>
             </Card>
           </Col>
-          <Col md="4" className="py-3">
-            <h2 className="text-center ft-30 fw-bold mb-3 mt-5 text-danger">
-              Celebrate with Morning Bakery Food!
-            </h2>
-            <h6 className="text-justify ft-16 fw-normal mb-3 mt-4 text-color-b94">
-              Celebrate any occasion with our delicious and beautiful cake.
-              Choose your favorite design and flavor.
-            </h6>
-            <Row className="py-3">
+          <Col md="6" className="py-3">
+            <Row>
               <Col
-                md={{ span: 10, offset: 1 }}
-                sm={{ span: 10, offset: 1 }}
-                xs={{ span: 10, offset: 1 }}
+                md={{ span: 8, offset: 2 }}
+                sm={{ span: 8, offset: 2 }}
+                xs={{ span: 8, offset: 2 }}
               >
-                <Row>
-                  <Col md="6" sm="6" xs="6">
-                    <Button variant="danger" className="">
-                      <span className="ft-16 ft-normal">View More</span>
-                    </Button>
-                  </Col>
-                  <Col md="6" sm="6" xs="6">
-                    <Button variant="outline-dark">
-                      <span className="ft-16 ft-normal">Go to Shop</span>
-                    </Button>
+                <h2 className="text-center ft-30 fw-bold mb-3 mt-5 text-danger">
+                  Celebrate with Morning Bakery Food!
+                </h2>
+                <h6 className="text-justify ft-16 fw-normal mb-3 mt-4 text-color-b94">
+                  Celebrate any occasion with our delicious and beautiful cake.
+                  Choose your favorite design and flavor.
+                </h6>
+                <Row className="py-3">
+                  <Col
+                    md={{ span: 10, offset: 1 }}
+                    sm={{ span: 10, offset: 1 }}
+                    xs={{ span: 10, offset: 1 }}
+                  >
+                    <Row>
+                      <Col md="6" sm="6" xs="6">
+                        <Button href="/products/cake" variant="danger" className="rounded-0">
+                          <span className="ft-16 ft-normal">View More</span>
+                        </Button>
+                      </Col>
+                      <Col md="6" sm="6" xs="6">
+                        <Button href="/products/all-items" variant="outline-dark" className="rounded-0">
+                          <span className="ft-16 ft-normal">Go to Shop</span>
+                        </Button>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </Col>
@@ -125,16 +134,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const productsUrl = `?per_page=12&category=sweets`;
     const bannerImageUrl = `?type=banner`;
+    const homeBannerUrl = `?type=home_banner`;
 
-    const [productRes, bannerFileRes, categoryRes] = await Promise.all([
-      getProducts(productsUrl),
-      getStorageFiles(bannerImageUrl),
-      getCategories(),
-    ]);
+    const [productRes, bannerFileRes, categoryRes, homeBannerRes] =
+      await Promise.all([
+        getProducts(productsUrl),
+        getStorageFiles(bannerImageUrl),
+        getCategories(),
+        getStorageFiles(homeBannerUrl),
+      ]);
     const response = {
       productsItems: productRes.data.data,
       bannerFiles: bannerFileRes.data.data,
       categories: categoryRes.data.data,
+      homeBanner: homeBannerRes.data.data,
     };
 
     return { props: { response } };

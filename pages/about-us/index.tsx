@@ -1,24 +1,16 @@
 import BaseContainer from "@/components/common/container/BaseContainer";
+import { getStorageFiles } from "@/data/api/storage-files";
+import { StorageFile } from "@/data/model/storage-file";
+import { GetServerSideProps } from "next";
 import React from "react";
-import {
-  Row,
-  Col,
-  Button,
-  Form,
-  InputGroup,
-  FloatingLabel,
-  Card,
-} from "react-bootstrap";
-import { FaHome } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
-import {
-  MdMailOutline,
-  MdOutlineAddIcCall,
-  MdOutlineMail,
-} from "react-icons/md";
+import { Row, Col, Button, Card } from "react-bootstrap";
 import { NextPageWithLayout } from "../_app";
 
-const AboutUs: NextPageWithLayout = () => {
+type AboutUsProps = {
+  productBanner: StorageFile[];
+};
+
+const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
   return (
     <section>
       <BaseContainer>
@@ -30,7 +22,11 @@ const AboutUs: NextPageWithLayout = () => {
                   <Card.Body className="py-0 px-0">
                     {/*eslint-disable-next-line @next/next/no-img-element*/}
                     <img
-                      src="https://res.cloudinary.com/deundpsr2/image/upload/v1670502325/bakery/category_local/f7ffsy3aoeib1kzezsry.jpg"
+                      src={
+                        productBanner.length > 0
+                          ? productBanner[0].image_url
+                          : ""
+                      }
                       alt="cake"
                       className="img-fluid"
                     />
@@ -40,8 +36,8 @@ const AboutUs: NextPageWithLayout = () => {
             </Row>
           </Col>
           <Col md="6">
-            <h1 className="ft-24 fw-normal text-danger mb-3">Who Are We</h1>
-            <h1 className="ft-24 fw-bold text-dark mt-3 mb-3">
+            <h1 className="ft-24 fw-bold text-uppercase text-center text-danger mb-2">Who Are We</h1>
+            <h1 className="ft-24 fw-bold text-dark text-center mt-3 mb-3">
               About Morning Bakery
             </h1>
             <div>
@@ -63,7 +59,7 @@ const AboutUs: NextPageWithLayout = () => {
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
                 Currently, We are operating over 70 bakery outlets in major
                 cities like Dhaka, Chittagong, and Sylhet of Bangladesh. Serving
-                local market with good reputation Well Food and Beverage Company
+                local market with good reputation Morning Bakery and Beverage Company
                 Limited is also exporting different cookies and rusks in Europe,
                 USA, Middle East, and some Asian Countries.
               </p>
@@ -90,7 +86,7 @@ const AboutUs: NextPageWithLayout = () => {
                   OUR OUTLETS
                 </h1>
                 <p className="text-center ft-14 fw-normal text-color-b94 min-height-150">
-                  Well Food is one of the most prominent bakeries in Bangladesh.
+                  Morning bakery is one of the most prominent bakeries in Bangladesh.
                   At Present, we have 30 outlets in Dhaka city and are ready to
                   take your orders and provide you the best food for your
                   special days.
@@ -113,7 +109,7 @@ const AboutUs: NextPageWithLayout = () => {
                 </p>
                 <Row>
                   <Col md={{ span: 8, offset: 4 }}>
-                    <Button variant="danger" className="rounded-0">
+                    <Button variant="danger" className="rounded-0" href="/products/sweets">
                       <span className="ft-16 ft-normal">Read More</span>
                     </Button>
                   </Col>
@@ -167,10 +163,10 @@ const AboutUs: NextPageWithLayout = () => {
               </Col>
               <Col md="6" sm="6" xs="6">
                 <h1 className="ft-30 fw-bold text-dark text-center mt-2 mb-2">
-                100000
+                  100000
                 </h1>
                 <p className="text-center ft-18 fw-normal text-color-b94 text-uppercase">
-                HAPPY FOLLOWERS
+                  HAPPY FOLLOWERS
                 </p>
               </Col>
             </Row>
@@ -179,6 +175,22 @@ const AboutUs: NextPageWithLayout = () => {
       </BaseContainer>
     </section>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const homeBannerUrl = `?type=home_banner`;
+
+    const homeBannerRes = await getStorageFiles(homeBannerUrl);
+
+    const productBanner = homeBannerRes.data.data;
+
+    return { props: { productBanner } };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default AboutUs;

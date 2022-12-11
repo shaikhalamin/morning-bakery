@@ -30,7 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
     const findInCart = cartItems.find((cItem) => cItem.item.id === product.id);
     if (findInCart) {
       setProductQuantity(findInCart.quantity);
-    }else{
+    } else {
       setProductQuantity(1);
     }
   };
@@ -45,14 +45,19 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
     setCartShow(true);
   };
 
- 
-
   return (
     <>
       <Row className="py-4 mb-4 border-bottom">
         <Col md="12">
+          {loading === true ? <Loader /> : ""}
+          {!products.length && (
+            <Row className="py-5 mt-5 mb-5">
+              <Col md={{ span: 6, offset: 3 }} className="mt-5 mb-5">
+                <h4 className="ft-20 fw-bold text-center"> No Products Found ! </h4>
+              </Col>
+            </Row>
+          )}
           <Row>
-            {loading === true ? <Loader /> : ""}
             {products.length > 0 &&
               products.map((product) => {
                 const imagePath =
@@ -64,17 +69,17 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
                   <Col md="3" key={product.id} className="mt-3">
                     <Card className="rounded-0">
                       <Card.Body className="py-0 px-0 position-relative">
-                        <Image
+                        {/*eslint-disable-next-line @next/next/no-img-element*/}
+                        <img
                           src={`${
                             Object.keys(imagePath).length > 0
                               ? imagePath.image_url
                               : ""
                           }`}
-                          priority={true}
+                         
                           alt={product.name}
-                          width={283}
+                          className="w-100"
                           height={283}
-                          layout="responsive"
                         />
                       </Card.Body>
                     </Card>
@@ -146,7 +151,6 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
         modalShow={modalShow}
         setModalClose={setModalClose}
         productQuantity={productQuantity}
-        
       />
     </>
   );

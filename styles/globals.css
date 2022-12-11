@@ -143,3 +143,7 @@ button.list_loader:hover {
 .bg-gray-200 {
   background-color: #e9ecef !important;
 }
+
+.nav-products .nav-link {
+  color: #fff !important;
+}

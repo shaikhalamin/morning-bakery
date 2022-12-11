@@ -1,6 +1,9 @@
 .navBgColor {
   background-color: #05173a !important;
 }
+.navWhite {
+ color: #fff !important;
+}
 
 .ftBold {
   font-weight: bold !important;

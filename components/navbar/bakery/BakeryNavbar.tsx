@@ -8,8 +8,46 @@ import { signOut, useSession } from "next-auth/react";
 import SubmitButton from "@/components/common/form/SubmitButton";
 import { useState } from "react";
 import { FaCartPlus, FaHeart } from "react-icons/fa";
-import { Badge } from "react-bootstrap";
+import { Badge, NavDropdown } from "react-bootstrap";
 import { useBakeryContext } from "context/BakeryContext";
+
+const categories = [
+  {
+    id: 7,
+    name: "Sweets",
+    alias: "sweets",
+  },
+  {
+    id: 6,
+    name: "Snacks",
+    alias: "snacks",
+  },
+  {
+    id: 5,
+    name: "Buiscuits",
+    alias: "biscuits",
+  },
+  {
+    id: 4,
+    name: "Cake",
+    alias: "cake",
+  },
+  {
+    id: 3,
+    name: "Coockies",
+    alias: "coockies",
+  },
+  {
+    id: 2,
+    name: "Bread/Bun",
+    alias: "bread_bun",
+  },
+  {
+    id: 1,
+    name: "Others",
+    alias: "others",
+  },
+];
 
 const BakeryNavbar = () => {
   const router = useRouter();
@@ -50,12 +88,23 @@ const BakeryNavbar = () => {
             >
               Home
             </Nav.Link>
-            <Nav.Link
-              href="/products/all-items"
-              className={`text-white ${styles.ft14} fw-normal`}
+            <NavDropdown
+              title="Products"
+              id="products"
+              className={`${styles.ft14} fw-normal nav-products`}
             >
-              Products
-            </Nav.Link>
+              {categories.length > 0 &&
+                categories.map((category) => (
+                  <NavDropdown.Item
+                    key={category.id}
+                    href={`/products/${category.alias}`}
+                    className={`text-dark ${styles.ft14} fw-normal`}
+                  >
+                    {category.name}
+                  </NavDropdown.Item>
+                ))}
+            </NavDropdown>
+
             <Nav.Link
               href="/about-us"
               className={`text-white ${styles.ft14} fw-normal`}
