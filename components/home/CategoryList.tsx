@@ -5,18 +5,23 @@ import { Row, Col, Nav } from "react-bootstrap";
 type CategoryListProps = {
   categoryItems: Category[];
   handleCategory: (category: string) => void;
+  selectedCategory: string;
 };
 
 const CategoryList: React.FC<CategoryListProps> = ({
   categoryItems,
   handleCategory,
+  selectedCategory,
 }) => {
   return (
     <Row className="py-3">
       <Col md="12">
         <Nav className="justify-content-center" activeKey="/home">
           {categoryItems.map((category) => (
-            <Nav.Item key={category.alias}>
+            <Nav.Item
+              key={category.alias}
+              className={category.alias === selectedCategory ? "border" : ""}
+            >
               <Nav.Link
                 href={`#`}
                 className="text-dark"
@@ -31,7 +36,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
                   />
                 </div>
                 <div>
-                  <span className="text-color-3b3 fw-bold ft-16 text-underline-hover">
+                  <span
+                    className={`text-color-3b3 fw-bold ft-16  ${
+                      category.alias === selectedCategory
+                        ? "category-selected-underline"
+                        : ""
+                    } text-underline-hover`}
+                  >
                     {category.name.toUpperCase()}
                   </span>
                 </div>

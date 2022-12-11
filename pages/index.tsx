@@ -34,12 +34,14 @@ const Home: NextPageWithLayout<ProductList> = ({
 
   const [products, setProducts] = useState<Product[]>(productsItems);
   const [loading, setLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("sweets");
 
   const handleCategory = async (category: string) => {
     try {
       const productFilterUrl = `?category=${category}`;
       setLoading(true);
       const result = await getProducts(productFilterUrl);
+      setSelectedCategory(category);
       setLoading(false);
       setProducts(result.data.data);
     } catch (error) {
@@ -67,6 +69,7 @@ const Home: NextPageWithLayout<ProductList> = ({
         <CategoryList
           categoryItems={categories}
           handleCategory={handleCategory}
+          selectedCategory={selectedCategory}
         />
         <ProductList products={products} loading={loading} />
 

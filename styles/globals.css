@@ -104,6 +104,11 @@ a.text-black:hover {
   border-bottom: 2px solid #d12121;
 }
 
+.category-selected-underline {
+  padding-bottom: 2px;
+  border-bottom: 2px solid #d12121;
+}
+
 .image-container {
   width: 100vw;
   height: 100vh;
@@ -133,4 +138,8 @@ button.list_loader:hover {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.bg-gray-200 {
+  background-color: #e9ecef !important;
 }

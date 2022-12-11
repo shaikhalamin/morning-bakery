@@ -1,6 +1,5 @@
 import { Cart } from "@/data/model/cart";
 import { Product } from "@/data/model/products";
-import { BlobOptions } from "buffer";
 import React, { ReactNode, useEffect, useState } from "react";
 import { BakeryContext } from "./BakeryContext";
 import { getCartCookies, setCartCookies } from "./cookies";

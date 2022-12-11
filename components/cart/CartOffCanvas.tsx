@@ -151,7 +151,7 @@ const CartOffCanvas = () => {
                     className="text-center w-100 rounded-0"
                     onClick={() => {
                       setCartShow(false);
-                      router.push("/cart");
+                      router.push("/checkout");
                     }}
                   >
                     <span className="ft-13 fw-bold text-uppercase">

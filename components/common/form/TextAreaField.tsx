@@ -1,35 +1,32 @@
 import React from "react";
 import { Form, FormText } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
-interface InputFormProps {
+
+interface TextAreaProps {
   labelText: string;
   name: string;
-  inputType: string;
+  rows?: number;
   errorMessage?: string;
   labelCls?: string;
-  formCheckCls?: string;
 }
 
-export const InputField: React.FC<InputFormProps> = ({
+const TextAreaField: React.FC<TextAreaProps> = ({
   labelText,
   name,
-  inputType,
+  rows,
   errorMessage,
   labelCls,
-  ...props
 }) => {
-
   const { register } = useFormContext();
 
   return (
-    <Form.Group controlId={name} >
-      <Form.Label className={labelCls ? labelCls : 'ft-14'}>{labelText}</Form.Label>
+    <Form.Group controlId={name}>
+      <Form.Label className={labelCls ? labelCls : ""}>{labelText}</Form.Label>
       <Form.Control
-        type={inputType ? inputType : "text"}
+        as="textarea"
+        rows={rows ? rows : 3}
         {...register(name)}
-        autoComplete="off"
         className={`${errorMessage ? "is-invalid" : ""} rounded-0`}
-        {...props}
       />
       {errorMessage && (
         <FormText className="text-danger">{errorMessage}</FormText>
@@ -37,3 +34,5 @@ export const InputField: React.FC<InputFormProps> = ({
     </Form.Group>
   );
 };
+
+export default TextAreaField;
