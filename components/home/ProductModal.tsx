@@ -11,6 +11,7 @@ type ProductModelProps = {
   setModalClose: (show: boolean) => void;
   singleProduct: Product;
   productQuantity: number;
+  
 };
 
 const ProductModal: React.FC<ProductModelProps> = ({
@@ -18,12 +19,14 @@ const ProductModal: React.FC<ProductModelProps> = ({
   setModalClose,
   singleProduct,
   productQuantity,
+  
 }) => {
   const { handleCartItem, setCartShow } = useBakeryContext();
   const [quantity, setQuantity] = useState(1);
 
   const addToCart = (product: Product) => {
     handleCartItem(product, quantity);
+    setQuantity(1);
     alert("Product added to cart !");
     setModalClose(true);
     setCartShow(true);

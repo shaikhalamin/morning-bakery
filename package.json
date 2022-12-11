@@ -25,7 +25,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.38.0",
-    "react-icons": "^4.4.0",
+    "react-icons": "^4.7.1",
     "react-simple-image-viewer": "^1.2.2",
     "react-simple-star-rating": "^5.1.7",
     "uuid": "^9.0.0",

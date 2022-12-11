@@ -3,7 +3,7 @@ import { StorageFile } from "@/data/model/storage-file";
 import { useBakeryContext } from "context/BakeryContext";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import Loader from "../common/loader/Loader";
 import ProductModal from "./ProductModal";
@@ -22,16 +22,17 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
   const [singleProduct, setSingleProduct] = useState<Product>();
   const [modalShow, setModalShow] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
-  const { cartItems, setCurrentQuantity, handleCartItem, setCartShow } =
-    useBakeryContext();
+  const { cartItems, handleCartItem, setCartShow } = useBakeryContext();
 
   const showProductModal = (product: Product) => {
     setSingleProduct(product);
     setModalShow(true);
     const findInCart = cartItems.find((cItem) => cItem.item.id === product.id);
-    findInCart
-      ? setProductQuantity(findInCart.quantity)
-      : setProductQuantity(1);
+    if (findInCart) {
+      setProductQuantity(findInCart.quantity);
+    }else{
+      setProductQuantity(1);
+    }
   };
 
   const setModalClose = (show: boolean) => {
@@ -39,10 +40,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
   };
 
   const addToCart = (product: Product) => {
-    handleCartItem(product,1);
+    handleCartItem(product, 1);
     alert("Product added to cart !");
     setCartShow(true);
   };
+
+ 
 
   return (
     <>
@@ -143,6 +146,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
         modalShow={modalShow}
         setModalClose={setModalClose}
         productQuantity={productQuantity}
+        
       />
     </>
   );

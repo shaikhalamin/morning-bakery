@@ -11,7 +11,6 @@ type BakeryProviderProps = {
 
 const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<Cart[]>([]);
-  const [quantity, setQuantity] = useState(1);
   const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
@@ -22,18 +21,8 @@ const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
     cart.length > 0 && setCartCookies(cart);
   }, [cart]);
 
-  const setCurrentQuantity = (qty: number) => {
-    setQuantity(qty);
-  };
-
-  const handleCartQuantity = (qty: number) => {
-    qty === 0 && quantity > 1 && setQuantity((prev) => prev - 1);
-    qty === 1 && setQuantity((prev) => prev + 1);
-  };
-
   const handleCartItem = (product: Product, qty: number) => {
     const findIndex = cart.findIndex((cItem) => cItem.item.id === product.id);
-    console.log("updated quantity ", qty)
     const cartItem = {
       item: product,
       quantity: qty,
@@ -65,11 +54,8 @@ const BakeryProvider: React.FC<BakeryProviderProps> = ({ children }) => {
 
   const value = {
     cartItems: cart,
-    currentQuantity: quantity,
     cartShow: showCart,
     setCartShow,
-    setCurrentQuantity,
-    handleCartQuantity,
     handleCartItem,
     deleteCartItem,
   };
