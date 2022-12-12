@@ -1,7 +1,7 @@
 ## morning-bakery
 Morning Bakery is an E-commerce application where user can purchase difference kinds of bakery items like Sweets,Cake,Biscuits,Bread/Bun and many others items. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [https://morning-bakery.vercel.app/](https://morning-bakery.vercel.app/) with your browser to see the result.
 
 First, run the development server:
 
