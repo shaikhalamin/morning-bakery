@@ -9,10 +9,12 @@ import ProductList from "@/components/home/ProductList";
 
 type CategoryProductsProps = {
   productsItems: Product[];
+  category: string;
 };
 
 const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
   productsItems,
+  category,
 }) => {
   const [products, setProducts] = useState<Product[]>(productsItems);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
     <BaseContainer>
       <Row className="py-3">
         <Col md="7">
-          <ul style={{ listStyleType: "none" }}>
+          <ul style={{ listStyleType: "none" }} className="ft-14 fw-normal">
             <li className="px-1" style={{ display: "inline" }}>
               Home
             </li>
@@ -30,10 +32,16 @@ const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
             <li className="px-1" style={{ display: "inline" }}>
               Products
             </li>
+            <li className="px-1" style={{ display: "inline" }}>
+              /
+            </li>
+            <li className="px-1" style={{ display: "inline" }}>
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </li>
           </ul>
         </Col>
         <Col md="5">
-          <ul style={{ listStyleType: "none" }}>
+          {/* <ul style={{ listStyleType: "none" }}>
             <li className="px-2" style={{ display: "inline" }}>
               <span className="ft-16 fw-bold text-dark">Show : </span>
             </li>
@@ -52,7 +60,7 @@ const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
             <li className="px-1" style={{ display: "inline" }}>
               36
             </li>
-          </ul>
+          </ul> */}
         </Col>
       </Row>
       <ProductList products={products} loading={loading} />
@@ -71,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const productRes = await getProducts(productsUrl);
     const productsItems = productRes.data.data;
 
-    return { props: { productsItems } };
+    return { props: { productsItems, category } };
   } catch (error) {
     return {
       notFound: true,

@@ -16,6 +16,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SignUpFormFields>({
     resolver: yupResolver(signUpSchema),
@@ -27,29 +28,33 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormFields) => {
     const singUpPayload = {
       ...data,
-      
     };
-    try {
-      setSubmitLoading(true);
-      const createUser = await signUp(singUpPayload);
-      if (createUser.data) {
-        router.push("/auth/signin");
-      } else {
-        setSubmitLoading(false);
-        alert("Username password error");
-      }
-    } catch (error: any) {
-      setSubmitLoading(false);
-      if (error instanceof AxiosError) {
-        const message = error.response?.data?.message as string;
-        const findDuplicateError = message.search("usersUniqueName");
-        if (findDuplicateError) {
-          alert("Username already exists !");
-        } else {
-          alert(message);
-        }
-      }
-    }
+    setSubmitLoading(true);
+    alert("Work in progress . Please try again later !")
+    reset();
+    setSubmitLoading(false);
+
+    // try {
+    //   setSubmitLoading(true);
+    //   const createUser = await signUp(singUpPayload);
+    //   if (createUser.data) {
+    //     router.push("/auth/signin");
+    //   } else {
+    //     setSubmitLoading(false);
+    //     alert("Username password error");
+    //   }
+    // } catch (error: any) {
+    //   setSubmitLoading(false);
+    //   if (error instanceof AxiosError) {
+    //     const message = error.response?.data?.message as string;
+    //     const findDuplicateError = message.search("usersUniqueName");
+    //     if (findDuplicateError) {
+    //       alert("Username already exists !");
+    //     } else {
+    //       alert(message);
+    //     }
+    //   }
+    // }
   };
 
   return (
@@ -119,16 +124,6 @@ const SignUp = () => {
                     )}
                   </Form.Group>
                 </Row>
-
-                <Row>
-                  <Form.Group as={Col} controlId="ImageType">
-                    <Form.Label>Sign Up As</Form.Label>
-                    <Form.Select {...register("role")}>
-                      <option value={Role.AGENT}>Agent</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Row>
-
                 <Row>
                   <Form.Group as={Col} controlId="password">
                     <Form.Label>Password</Form.Label>
@@ -145,8 +140,8 @@ const SignUp = () => {
                     <SubmitButton
                       title="Submit"
                       isLoading={submitLoading}
-                      buttonCls="w-100"
-                      variant="warning"
+                      buttonCls="w-100 rounded-0"
+                      variant="danger"
                     />
                   </Col>
                 </Row>

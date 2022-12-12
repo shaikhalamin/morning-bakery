@@ -102,24 +102,33 @@ const Home: NextPageWithLayout<ProductList> = ({
                   Celebrate any occasion with our delicious and beautiful cake.
                   Choose your favorite design and flavor.
                 </h6>
-                <Row className="py-3">
-                  <Col
-                    md={{ span: 10, offset: 1 }}
-                    sm={{ span: 10, offset: 1 }}
-                    xs={{ span: 10, offset: 1 }}
-                  >
-                    <Row>
-                      <Col md="6" sm="6" xs="6">
-                        <Button href="/products/cake" variant="danger" className="rounded-0">
-                          <span className="ft-16 ft-normal">View More</span>
-                        </Button>
-                      </Col>
-                      <Col md="6" sm="6" xs="6">
-                        <Button href="/products/all-items" variant="outline-dark" className="rounded-0">
-                          <span className="ft-16 ft-normal">Go to Shop</span>
-                        </Button>
-                      </Col>
-                    </Row>
+              </Col>
+            </Row>
+            <Row className="py-3">
+              <Col
+                md={{ span: 6, offset: 3 }}
+                sm={{ span: 6, offset: 3 }}
+                xs={{ span: 12, offset: 1 }}
+                className="justify-content-center"
+              >
+                <Row>
+                  <Col md="6" sm="6" xs="6">
+                    <Button
+                      href="/products/cake"
+                      variant="danger"
+                      className="rounded-0"
+                    >
+                      <span className="ft-16 ft-normal">View More</span>
+                    </Button>
+                  </Col>
+                  <Col md="6" sm="6" xs="6">
+                    <Button
+                      href="/products/all-items"
+                      variant="outline-dark"
+                      className="rounded-0"
+                    >
+                      <span className="ft-16 ft-normal">Go to Shop</span>
+                    </Button>
                   </Col>
                 </Row>
               </Col>

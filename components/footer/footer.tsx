@@ -7,7 +7,7 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 
-import _ from "lodash"
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -15,64 +15,103 @@ const Footer = () => {
       <section className={`py-3`}>
         <Container>
           <Row>
-            <Col md="12" key={Number(_.random(10,20).toString())}>
+            <Col md="12">
               <Container>
                 <Row className={`mt-2 mb-2 py-2`}>
-                  <Col md="3" className="mt-4" key={Number(_.random(20,30).toString())}>
+                  <Col md="3" className="mt-4">
                     <div className="">
                       <div className="py-3 px-3">
                         <div className="ft-20 mb-1 text-color-a3a fw-bold">
-                          Templates
+                          Main Menu
                         </div>
                         <div className="ft-16 mt-3 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Premade websites</a>
+                          <Link href="/">
+                            <a className="text-color-b94 text-decoration-none">
+                              Home
+                            </a>
+                          </Link>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Popup bundles</a>
+                          <Link href="/products/all-items">
+                            <a className="text-color-b94 text-decoration-none">
+                              Products
+                            </a>
+                          </Link>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Website models</a>
+                          <Link href="/about-us">
+                            <a className="text-color-b94 text-decoration-none">
+                              About Us
+                            </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </Col>
-                  <Col md="3" className="mt-4" key={Number(_.random(31,40).toString())}>
+                  <Col md="3" className="mt-4">
                     <div className="">
                       <div className="py-3 px-3">
                         <div className="ft-20 mb-1 text-color-a3a fw-bold">
                           Support
                         </div>
                         <div className="ft-16 mt-3 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Help Center</a>
+                          <a
+                            href="#"
+                            className="text-color-b94 text-decoration-none"
+                          >
+                            Help Center
+                          </a>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Refund policy</a>
+                          <a
+                            href="#"
+                            className="text-color-b94 text-decoration-none"
+                          >
+                            Refund policy
+                          </a>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">FAQ</a>
+                          <a
+                            href="#"
+                            className="text-color-b94 text-decoration-none"
+                          >
+                            FAQ
+                          </a>
                         </div>
                       </div>
                     </div>
                   </Col>
-                  <Col md="3" className="mt-4" key={Number(_.random(41,50).toString())}>
+                  <Col md="3" className="mt-4">
                     <div className="">
                       <div className="py-3 px-3">
                         <div className="ft-20 mb-1 text-color-a3a fw-bold">
                           Links
                         </div>
                         <div className="ft-16 mt-3 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Blog</a>
+                          <Link href="/contact-us">
+                            <a className="text-color-b94 text-decoration-none">
+                              Contact Us
+                            </a>
+                          </Link>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Add Property</a>
+                          <Link href="/products/cake">
+                            <a className="text-color-b94 text-decoration-none">
+                              Cake
+                            </a>
+                          </Link>
                         </div>
                         <div className="ft-16 mb-1 text-color-b94">
-                          <a href="#" className="text-color-b94 text-decoration-none">Find Property</a>
+                          <Link href="/products/others">
+                            <a className="text-color-b94 text-decoration-none">
+                              Others
+                            </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </Col>
-                  <Col md="3" className="mt-4" key={Number(_.random(51,60).toString())}>
+                  <Col md="3" className="mt-4">
                     <div className="">
                       <div className="py-3 px-3">
                         <div className="ft-20 mb-1 text-color-a3a fw-bold">
@@ -113,7 +152,7 @@ const Footer = () => {
         </Container>
         <hr />
         <Row>
-          <Col className="mx-3" key={Number(_.random(61,70).toString())}>
+          <Col className="mx-3">
             <p className="text-center text-color-b94 fs-14 fw-normal">
               Copyright © {new Date().getFullYear()} powered by morning bakery,
               Inc. All rights reserved

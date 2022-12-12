@@ -114,14 +114,14 @@ const CartOffCanvas = () => {
         </div>
         {cartItems.length > 0 && (
           <>
-            <Row className="py-2 mt-3 mb-2">
+            <Row className="py-2 mt-3 mb-2 px-3">
               <Col md="6" xs="6">
                 <h4 className="ft-20 fw-bold text-start">SUBTOTAL : </h4>
               </Col>
               <Col md="6" xs="6">
                 <h4 className="ft-20 fw-bold text-end text-danger">
                   ৳{" "}
-                  {Number(cartItems.reduce((acc, item) => acc + item.price, 0))}
+                  {Number(cartItems.reduce((acc, item) => acc + item.price, 0)).toFixed(2)}
                 </h4>
               </Col>
             </Row>

@@ -28,7 +28,9 @@ const Checkout = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit = async (data: CheckoutFormFields) => {};
+  const onSubmit = async (data: CheckoutFormFields) => {
+    alert("Please log in first !");
+  };
 
   const errorMessage = getErrorMessage(errors);
 

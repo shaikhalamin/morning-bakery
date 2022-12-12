@@ -26,26 +26,29 @@ const SignIn = () => {
 
   const onSubmit = async (data: SignInFormFields) => {
     const { username, password } = data;
+    setSubmitLoading(true);
+    alert("Work in progress . Please try again later !")
+    setSubmitLoading(false);
     try {
-      setSubmitLoading(true);
-      const res = await signIn("credentials", {
-        username: username,
-        password: password,
-        redirect: false,
-      });
+      // setSubmitLoading(true);
+      // const res = await signIn("credentials", {
+      //   username: username,
+      //   password: password,
+      //   redirect: false,
+      // });
 
-      if (res?.ok && res.error == null) {
-        const url = new URL(res?.url as string);
-        const callBackUrl = url.searchParams.get("callbackUrl");
-        if (callBackUrl) {
-          router.push(callBackUrl as string);
-        } else {
-          router.push("/");
-        }
-      } else {
-        setSubmitLoading((prev) => !prev);
-        alert("Username or password incorrect !");
-      }
+      // if (res?.ok && res.error == null) {
+      //   const url = new URL(res?.url as string);
+      //   const callBackUrl = url.searchParams.get("callbackUrl");
+      //   if (callBackUrl) {
+      //     router.push(callBackUrl as string);
+      //   } else {
+      //     router.push("/");
+      //   }
+      // } else {
+      //   setSubmitLoading((prev) => !prev);
+      //   alert("Username or password incorrect !");
+      // }
     } catch (error) {
       setSubmitLoading(false);
       console.log("login error", error);
@@ -102,7 +105,7 @@ const SignIn = () => {
                       isLoading={submitLoading}
                       loadingTitle="Checking"
                       buttonCls="w-100 mt-3"
-                      variant="warning"
+                      variant="danger"
                     />
                   </Col>
                 </Row>

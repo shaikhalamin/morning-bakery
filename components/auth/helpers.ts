@@ -13,7 +13,6 @@ export type SignUpFormFields = {
   email: string;
   phone: string;
   password: string;
-  role?: Role;
 };
 
 export type SignInFormFields = {
@@ -27,7 +26,6 @@ export type EditUserFormFields = {
   email: string;
   phone: string;
   password: string;
-  role: string;
 };
 
 export const signUpSchema = yup
@@ -38,7 +36,6 @@ export const signUpSchema = yup
     email: yup.string().email().required("Email is required"),
     phone: yup.string().required("Phone is required"),
     password: yup.string().required("Password is required"),
-    role: yup.string().required("Role is required"),
   })
   .required();
 
@@ -56,6 +53,5 @@ export const userEditSchema = yup
     email: yup.string().email().required(),
     phone: yup.string().optional().required(),
     password: yup.string().optional().nullable(),
-    role: yup.string().optional().nullable(),
   })
   .required();
