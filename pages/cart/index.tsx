@@ -1,5 +1,6 @@
 import CartSingleItem from "@/components/cart/CartSingleItem";
 import BaseContainer from "@/components/common/container/BaseContainer";
+import Meta from "@/components/meta/Meta";
 import { useBakeryContext } from "context/BakeryContext";
 import { useRouter } from "next/router";
 import React from "react";
@@ -12,6 +13,10 @@ const CartItems = () => {
 
   return (
     <BaseContainer>
+      <Meta
+        title={`Morning Bakery | Cart`}
+        content={`Best sweets and bakery items in dhaka,Bangladesh`}
+      />
       {!cartItems.length && (
         <Row className="py-5 mt-5 mb-5 border-bottom">
           <Col md="12" xs="12">
@@ -168,7 +173,7 @@ const CartItems = () => {
                       <Button
                         variant="danger"
                         className="text-center w-100 rounded-0"
-                        onClick={() => router.push('/checkout')}
+                        onClick={() => router.push("/checkout")}
                       >
                         <span className="ft-13 fw-bold text-uppercase">
                           proceed to checkout

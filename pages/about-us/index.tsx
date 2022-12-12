@@ -1,4 +1,5 @@
 import BaseContainer from "@/components/common/container/BaseContainer";
+import Meta from "@/components/meta/Meta";
 import { getStorageFiles } from "@/data/api/storage-files";
 import { StorageFile } from "@/data/model/storage-file";
 import { GetServerSideProps } from "next";
@@ -13,6 +14,10 @@ type AboutUsProps = {
 const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
   return (
     <section>
+      <Meta
+        title={`Morning Bakery | About Us`}
+        content={`Best sweets and bakery items in dhaka,Bangladesh`}
+      />
       <BaseContainer>
         <Row className="py-5">
           <Col md="6">
@@ -36,7 +41,9 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
             </Row>
           </Col>
           <Col md="6">
-            <h1 className="ft-24 fw-bold text-uppercase text-center text-danger mb-2">Who Are We</h1>
+            <h1 className="ft-24 fw-bold text-uppercase text-center text-danger mb-2">
+              Who Are We
+            </h1>
             <h1 className="ft-24 fw-bold text-dark text-center mt-3 mb-3">
               About Morning Bakery
             </h1>
@@ -59,9 +66,9 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
                 Currently, We are operating over 70 bakery outlets in major
                 cities like Dhaka, Chittagong, and Sylhet of Bangladesh. Serving
-                local market with good reputation Morning Bakery and Beverage Company
-                Limited is also exporting different cookies and rusks in Europe,
-                USA, Middle East, and some Asian Countries.
+                local market with good reputation Morning Bakery and Beverage
+                Company Limited is also exporting different cookies and rusks in
+                Europe, USA, Middle East, and some Asian Countries.
               </p>
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
                 Diversity and equity are at the heart of our values and growth
@@ -86,10 +93,10 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
                   OUR OUTLETS
                 </h1>
                 <p className="text-center ft-14 fw-normal text-color-b94 min-height-150">
-                  Morning bakery is one of the most prominent bakeries in Bangladesh.
-                  At Present, we have 30 outlets in Dhaka city and are ready to
-                  take your orders and provide you the best food for your
-                  special days.
+                  Morning bakery is one of the most prominent bakeries in
+                  Bangladesh. At Present, we have 30 outlets in Dhaka city and
+                  are ready to take your orders and provide you the best food
+                  for your special days.
                 </p>
                 <Row>
                   <Col md={{ span: 8, offset: 4 }}>
@@ -109,7 +116,11 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ productBanner }) => {
                 </p>
                 <Row>
                   <Col md={{ span: 8, offset: 4 }}>
-                    <Button variant="danger" className="rounded-0" href="/products/sweets">
+                    <Button
+                      variant="danger"
+                      className="rounded-0"
+                      href="/products/sweets"
+                    >
                       <span className="ft-16 ft-normal">Read More</span>
                     </Button>
                   </Col>

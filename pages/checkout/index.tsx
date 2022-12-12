@@ -5,6 +5,7 @@ import {
 import BaseContainer from "@/components/common/container/BaseContainer";
 import { InputField } from "@/components/common/form/InputField";
 import TextAreaField from "@/components/common/form/TextAreaField";
+import Meta from "@/components/meta/Meta";
 import { getErrorMessage } from "@/data/utils/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useBakeryContext } from "context/BakeryContext";
@@ -36,6 +37,10 @@ const Checkout = () => {
 
   return (
     <BaseContainer>
+      <Meta
+        title={`Morning Bakery | Checkout`}
+        content={`Best sweets and bakery items in dhaka,Bangladesh`}
+      />
       {!cartItems.length && (
         <Row className="py-5 mt-5 mb-5 border-bottom">
           <Col md="12" xs="12">

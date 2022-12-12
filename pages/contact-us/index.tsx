@@ -25,6 +25,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getErrorMessage } from "@/data/utils/lib";
 import TextAreaField from "@/components/common/form/TextAreaField";
+import Meta from "@/components/meta/Meta";
 
 const ContactUs: NextPageWithLayout = () => {
   const methods = useForm<ContactUsFormFields>({
@@ -48,6 +49,10 @@ const ContactUs: NextPageWithLayout = () => {
   return (
     <section>
       <BaseContainer>
+        <Meta
+          title={`Morning Bakery | Contact Us`}
+          content={`Best sweets and bakery items in dhaka,Bangladesh`}
+        />
         <Row className="py-5 border-bottom">
           <Col md="6">
             <h1 className="ft-24 fw-bold text-dark">OUR CORPORATE OFFICE</h1>

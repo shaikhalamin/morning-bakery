@@ -6,6 +6,7 @@ import { getProducts } from "@/data/api/products";
 import { GetServerSideProps } from "next";
 import { Product } from "@/data/model/products";
 import ProductList from "@/components/home/ProductList";
+import Meta from "@/components/meta/Meta";
 
 type CategoryProductsProps = {
   productsItems: Product[];
@@ -18,8 +19,15 @@ const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
 }) => {
   const [products, setProducts] = useState<Product[]>(productsItems);
   const [loading, setLoading] = useState(false);
+
+  const title = category.charAt(0).toUpperCase() + category.slice(1);
+
   return (
     <BaseContainer>
+      <Meta
+        title={`Morning Bakery | ${title}`}
+        content={`${title} | Best sweets and bakery items in dhaka,Bangladesh`}
+      />
       <Row className="py-3">
         <Col md="7">
           <ul style={{ listStyleType: "none" }} className="ft-14 fw-normal">
@@ -36,7 +44,7 @@ const CategoryProducts: NextPageWithLayout<CategoryProductsProps> = ({
               /
             </li>
             <li className="px-1" style={{ display: "inline" }}>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
+              {title}
             </li>
           </ul>
         </Col>
