@@ -65,8 +65,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const { category } = query;
     const productsUrl =
       category !== "all-items"
-        ? `?per_page=12&category=${category as string}`
-        : `?per_page=12&category=sweets`;
+        ? `?per_page=24&category=${category as string}`
+        : `?per_page=24&category=sweets`;
 
     const productRes = await getProducts(productsUrl);
     const productsItems = productRes.data.data;

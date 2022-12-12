@@ -50,7 +50,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
       <Row className="py-4 mb-4 border-bottom">
         <Col md="12">
           {loading === true ? <Loader /> : ""}
-          {!products.length && (
+          {!products.length && loading === false && (
             <Row className="py-5 mt-5 mb-5">
               <Col md={{ span: 6, offset: 3 }} className="mt-5 mb-5">
                 <h4 className="ft-20 fw-bold text-center"> No Products Found ! </h4>

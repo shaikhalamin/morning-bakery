@@ -39,7 +39,8 @@ const Home: NextPageWithLayout<ProductList> = ({
 
   const handleCategory = async (category: string) => {
     try {
-      const productFilterUrl = `?category=${category}`;
+      setProducts([]);
+      const productFilterUrl = `?per_page=16&category=${category}`;
       setLoading(true);
       const result = await getProducts(productFilterUrl);
       setSelectedCategory(category);
