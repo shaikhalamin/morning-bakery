@@ -35,7 +35,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormFields) => {
     const singUpPayload = {
       ...data,
-      role: "admin",
+      role: "user",
     };
     console.log({
       singUpPayload,
