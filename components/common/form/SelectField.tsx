@@ -29,6 +29,7 @@ const SelectField: React.FC<SelectFormProps> = ({
     <Form.Group controlId={`htmlId${fieldName.toLowerCase()}`}>
       <Form.Label className={labelCls}>{labelText}</Form.Label>
       <Form.Select
+        defaultValue={"Select"}
         {...register(fieldName)}
         className={errorMessage ? "is-invalid" : ""}
         {...props}

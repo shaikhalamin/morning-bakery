@@ -1,12 +1,11 @@
 export type User = {
   id: number;
-  created_at: string;
-  updated_at: string;
-  firstName: string;
-  lastName: string;
-  username: string;
+  first_name: string;
+  last_name: string;
+  email_verified_at: string | null;
   email: string;
   phone: string;
-  isActive: boolean;
+  is_active: boolean;
+  is_verified: boolean;
   role: string;
 };

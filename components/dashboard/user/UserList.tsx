@@ -33,7 +33,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 <tr>
                   <th>FirstName</th>
                   <th>LastName</th>
-                  <th>Username</th>
+
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Role</th>
@@ -44,9 +44,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 {users.length > 0 &&
                   users.map((user) => (
                     <tr key={user.id}>
-                      <td>{user.firstName}</td>
-                      <td>{user.lastName}</td>
-                      <td>{user.username}</td>
+                      <td>{user.first_name}</td>
+                      <td>{user.last_name}</td>
+
                       <td>{user.email}</td>
                       <td>{user.phone}</td>
                       <td>{user.role}</td>
@@ -61,7 +61,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                           btnRef={buttonRef}
                           onClick={() => {
                             setButtonRef(user.id);
-                            router.push(`/admin/users/edit/${user.id}`);
+                            router.push(`/dashboard/users/edit/${user.id}`);
                           }}
                         />
                       </td>

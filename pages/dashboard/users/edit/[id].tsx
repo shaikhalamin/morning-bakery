@@ -1,4 +1,4 @@
-import EditUserInfo from "@/components/admin/user/EditUserInfo";
+import EditUserInfo from "@/components/dashboard/user/EditUserInfo";
 import AdminLayout from "@/components/layouts/AdminLayout";
 import { getUser } from "@/data/api/user";
 import { User } from "@/data/model/user";
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (session) {
       const token = `${(session as any)?.access_token}`;
       const userResults = await getUser(Number(id), token);
-      user = userResults.data as User;
+      user = userResults.data.data as User;
     }
     return { props: { user: user } };
   } catch (error) {

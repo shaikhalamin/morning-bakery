@@ -13,8 +13,8 @@ export const authOptions: NextAuthOptions = {
       credentials: {},
       authorize: async (credentials, req) => {
         try {
-          const { username, password } = credentials as CredentialsType;
-          const response = await login({ username, password });
+          const { email, password } = credentials as CredentialsType;
+          const response = await login({ email, password });
           if (response.data) {
             //console.log("login response from server", JSON.stringify(response.data))
             return response.data;

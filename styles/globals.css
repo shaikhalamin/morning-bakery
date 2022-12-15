@@ -147,3 +147,11 @@ button.list_loader:hover {
 .nav-products .nav-link {
   color: #fff !important;
 }
+
+.row > div.pd-right-0 {
+  padding-right: 0px !important;
+}
+
+.row > div.pd-left-0 {
+  padding-left: 0px !important;
+}

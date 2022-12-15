@@ -15,7 +15,7 @@ export default withAuth(
     const token = req.nextauth.token;
     //console.log("token in middleware",token)
 
-    if (isAdminRoute(pathname)) {
+    if (isDashboardRoute(pathname)) {
       return NextResponse.rewrite(new URL(pathname, req.url));
     }
     return NextResponse.next();
@@ -24,10 +24,10 @@ export default withAuth(
     callbacks: {
       authorized({ token }) {
         //console.log("token value in middleware callback", JSON.stringify(token))
-        return token?.role === "admin" || token?.role === "agent";
+        return token?.role === "admin" || token?.role === "user";
       },
     },
   }
 );
 
-export const config = { matcher: ["/admin/:path*", "/dashboard/:path*"] };
+export const config = { matcher: ["/dashboard/:path*"] };

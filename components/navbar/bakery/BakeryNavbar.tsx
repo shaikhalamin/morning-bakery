@@ -4,12 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import styles from "./bakery-navbar.module.css";
 import HamBurgerIcon from "../HamBurgerIcon";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
-import SubmitButton from "@/components/common/form/SubmitButton";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FaCartPlus, FaHeart } from "react-icons/fa";
 import { Badge, NavDropdown } from "react-bootstrap";
 import { useBakeryContext } from "context/BakeryContext";
+import ProfileNavItem from "../ProfileNavItem";
 
 const categories = [
   {
@@ -161,38 +161,7 @@ const BakeryNavbar = () => {
               </span>
             </Nav.Link>
 
-            {session && (
-              <>
-                <SubmitButton
-                  title="Dashboard"
-                  variant="warning"
-                  isLoading={false}
-                  btnId="dashboard"
-                  btnRef={buttonRef}
-                  onClick={async () => {
-                    setButtonRef("dashboard");
-                    await router.push("/admin/home");
-                  }}
-                  loadingTitle="Redirecting"
-                  buttonCls={`text-dark ${styles.ftBold} ${styles.ft14} rounded-0`}
-                  style={{ marginRight: "10px" }}
-                />
-                <SubmitButton
-                  title="Log Out"
-                  variant="outline-light"
-                  isLoading={false}
-                  btnId="log_out"
-                  btnRef={buttonRef}
-                  onClick={async () => {
-                    setButtonRef("log_out");
-                    await signOut();
-                  }}
-                  loadingTitle="Logging out"
-                  buttonCls="rounded-0"
-                  titleCls="ft-14"
-                />
-              </>
-            )}
+            {session && <ProfileNavItem />}
           </Nav>
         </Navbar.Collapse>
       </Container>

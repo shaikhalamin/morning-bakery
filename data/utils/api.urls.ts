@@ -6,7 +6,7 @@ export const API_PROXY_BASE =
 export const API_URLS = {
   base_url: API_BASE,
   auth: `${API_BASE}/api/auth`,
-  users: `${API_BASE}/api/user`,
+  users: `${API_BASE}/api/users`,
   storageFiles: `${API_BASE}/api/storage-files`,
   products: `${API_BASE}/api/products`,
   categories: `${API_BASE}/api/categories`,

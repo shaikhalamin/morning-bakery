@@ -1,7 +1,7 @@
 import { DefaultUser } from "next-auth";
 
 export type CredentialsType = {
-  username: string;
+  email: string;
   password: string;
   csrfToken: string;
   callbackUrl: string;
@@ -10,13 +10,13 @@ export type CredentialsType = {
 
 export type ApiUser = {
   id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
+  first_name: string;
+  last_name: string;
+  email_verified_at: string | null;
   email: string;
   phone: string;
-  isActive: boolean;
-  isVerified: boolean;
+  is_active: boolean;
+  is_verified: boolean;
   role: string;
 };
 

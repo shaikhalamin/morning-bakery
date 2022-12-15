@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { InputGroup, Form, FormText } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-type InputGroupFieldProps = {
+type InputGroupCustomFieldProps = {
   labelText?: string;
   labelTextIcon: ReactNode;
   name: string;
@@ -11,7 +11,7 @@ type InputGroupFieldProps = {
   errorMessage?: string;
 };
 
-const InputGroupField: React.FC<InputGroupFieldProps> = ({
+const InputGroupCustomField: React.FC<InputGroupCustomFieldProps> = ({
   labelText,
   labelTextIcon,
   name,
@@ -22,11 +22,8 @@ const InputGroupField: React.FC<InputGroupFieldProps> = ({
   const { register } = useFormContext();
   return (
     <Form.Group className="mb-3" controlId={name}>
-      {labelText && <Form.Label className="ft-14">{labelText}</Form.Label>}
+      {(labelText as string)?.length > 0 && <Form.Label className="ft-14">{labelText}</Form.Label>}
       <InputGroup>
-        <InputGroup.Text id={name} className="rounded-0">
-          <span>{labelTextIcon}</span>
-        </InputGroup.Text>
         <Form.Control
           placeholder={placeholder ? placeholder : ""}
           aria-label={name}
@@ -35,6 +32,9 @@ const InputGroupField: React.FC<InputGroupFieldProps> = ({
           aria-describedby={name}
           className={`${errorMessage ? "is-invalid" : ""} rounded-0`}
         />
+        <InputGroup.Text id={name} className="rounded-0 cursor-pointer bg-white">
+          <span>{labelTextIcon}</span>
+        </InputGroup.Text>
       </InputGroup>
       {errorMessage && (
         <FormText className="text-danger">{errorMessage}</FormText>
@@ -43,4 +43,4 @@ const InputGroupField: React.FC<InputGroupFieldProps> = ({
   );
 };
 
-export default InputGroupField;
+export default InputGroupCustomField;

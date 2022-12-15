@@ -6,7 +6,7 @@ const AUTH_URL = API_URLS.auth;
 const USER_URL = API_URLS.users;
 
 type LoginCredentials =  {
-    username: string
+    email: string
     password: string
 }
 

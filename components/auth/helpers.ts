@@ -1,28 +1,27 @@
 import * as yup from "yup";
 
 export enum Role {
-  AGENT = "agent",
   ADMIN = "admin",
   USER = "user",
 }
 
 export type SignUpFormFields = {
-  firstName: string;
-  lastName: string;
-  username: string;
+  first_name:string;
+  last_name:string;
   email: string;
   phone: string;
   password: string;
+  role?: string;
 };
 
 export type SignInFormFields = {
-  username: string;
+  email: string;
   password: string;
 };
 
 export type EditUserFormFields = {
-  firstName: string;
-  lastName: string;
+  first_name:string;
+  last_name:string;
   email: string;
   phone: string;
   password: string;
@@ -30,10 +29,9 @@ export type EditUserFormFields = {
 
 export const signUpSchema = yup
   .object({
-    firstName: yup.string().required("FirstName is required"),
-    lastName: yup.string().required("LastName is required"),
-    username: yup.string().required("Username is required"),
-    email: yup.string().email().required("Email is required"),
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    email: yup.string().email().required("Email is required").typeError("The email field must be a valid email address"),
     phone: yup.string().required("Phone is required"),
     password: yup.string().required("Password is required"),
   })
@@ -41,16 +39,16 @@ export const signUpSchema = yup
 
 export const signInSchema = yup
   .object({
-    username: yup.string().required("Username is required"),
+    email: yup.string().email().required("Email is required").typeError("The email field must be a valid email address"),
     password: yup.string().required("Password is required"),
   })
   .required();
 
 export const userEditSchema = yup
   .object({
-    firstName: yup.string().optional().required(),
-    lastName: yup.string().optional().required(),
-    email: yup.string().email().required(),
+    first_name: yup.string().optional().nullable(),
+    last_name: yup.string().optional().nullable(),
+    email: yup.string().email().optional().nullable(),
     phone: yup.string().optional().required(),
     password: yup.string().optional().nullable(),
   })

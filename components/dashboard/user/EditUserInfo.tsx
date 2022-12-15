@@ -10,15 +10,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Row, Col, Card, Button, Form, Container } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
+import { setProfileFormValue } from "./user.helpers";
 
 type EditUserInfoProps = {
   user: User;
 };
 
 const ROLES = [
-  { id: "agent", name: "Agent" },
   { id: "user", name: "User" },
   { id: "admin", name: "Admin" },
 ];
@@ -36,6 +36,8 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
     formState: { errors },
     setValue,
   } = reactHookFormMethods;
+
+  setProfileFormValue(setValue, user);
 
   const errorMessage = getErrorMessage(errors);
 
@@ -63,15 +65,15 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
   };
 
   return (
-    <BaseContainer>
+    <Container className="px-2" fluid>
       <Row className="py-3">
-        <Col md={10}>
-          <Card>
+        <Col md={8}>
+          <Card className="border-0">
             <Card.Body>
               <Row className="py-3">
                 <Col md="12">
                   <h4 className="text-center mt-3 mb-3">
-                    Edit Basic Information
+                    Edit User Information
                   </h4>
                 </Col>
               </Row>
@@ -80,18 +82,18 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
                   <Row className="mb-3">
                     <Col md="6">
                       <InputField
-                        labelText="First Name"
-                        name="firstName"
+                        labelText="First name"
+                        name="first_name"
                         inputType="text"
-                        errorMessage={errorMessage("firstName")}
+                        errorMessage={errorMessage("first_name")}
                       />
                     </Col>
                     <Col md="6">
                       <InputField
-                        labelText="Last Name"
-                        name="lastName"
+                        labelText="Last name"
+                        name="last_name"
                         inputType="text"
-                        errorMessage={errorMessage("lastName")}
+                        errorMessage={errorMessage("last_name")}
                       />
                     </Col>
                   </Row>
@@ -140,8 +142,11 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
                     <Col md="12" className="mt-2">
                       <SubmitButton
                         title="Submit"
-                        variant="warning"
                         isLoading={loading}
+                        loadingTitle="Checking"
+                        buttonCls="w-100 mt-3 rounded-0"
+                        titleCls="ft-15"
+                        variant="danger"
                       />
                     </Col>
                   </Row>
@@ -151,7 +156,7 @@ const EditUserInfo: React.FC<EditUserInfoProps> = ({ user }) => {
           </Card>
         </Col>
       </Row>
-    </BaseContainer>
+    </Container>
   );
 };
 

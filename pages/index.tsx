@@ -75,66 +75,68 @@ const Home: NextPageWithLayout<ProductList> = ({
         />
         <ProductList products={products} loading={loading} />
 
-        <Row className="py-5 border-bottom mt-4">
-          <Col md="6">
-            <Card className="rounded-0">
-              <Card.Body className="py-0 px-0">
-                {/*eslint-disable-next-line @next/next/no-img-element*/}
-                <img
-                  src={homeBanner.length > 0 ? homeBanner[0].image_url : ""}
-                  alt="cake"
-                  className="mx-auto d-block mt-3 mb-3 img-fluid"
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md="6" className="py-3">
-            <Row>
-              <Col
-                md={{ span: 8, offset: 2 }}
-                sm={{ span: 8, offset: 2 }}
-                xs={{ span: 8, offset: 2 }}
-              >
-                <h2 className="text-center ft-30 fw-bold mb-3 mt-5 text-danger">
-                  Celebrate with Morning Bakery Food!
-                </h2>
-                <h6 className="text-justify ft-16 fw-normal mb-3 mt-4 text-color-b94">
-                  Celebrate any occasion with our delicious and beautiful cake.
-                  Choose your favorite design and flavor.
-                </h6>
-              </Col>
-            </Row>
-            <Row className="py-3">
-              <Col
-                md={{ span: 6, offset: 3 }}
-                sm={{ span: 6, offset: 3 }}
-                xs={{ span: 12, offset: 1 }}
-                className="justify-content-center"
-              >
-                <Row>
-                  <Col md="6" sm="6" xs="6">
-                    <Button
-                      href="/products/cake"
-                      variant="danger"
-                      className="rounded-0"
-                    >
-                      <span className="ft-16 ft-normal">View More</span>
-                    </Button>
-                  </Col>
-                  <Col md="6" sm="6" xs="6">
-                    <Button
-                      href="/products/all-items"
-                      variant="outline-dark"
-                      className="rounded-0"
-                    >
-                      <span className="ft-16 ft-normal">Go to Shop</span>
-                    </Button>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        {homeBanner.length > 0 && (
+          <Row className="py-5 border-bottom mt-4">
+            <Col md="6">
+              <Card className="rounded-0">
+                <Card.Body className="py-0 px-0">
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    src={homeBanner.length > 0 ? homeBanner[0].image_url : ""}
+                    alt="cake"
+                    className="mx-auto d-block mt-3 mb-3 img-fluid"
+                  />
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md="6" className="py-3">
+              <Row>
+                <Col
+                  md={{ span: 8, offset: 2 }}
+                  sm={{ span: 8, offset: 2 }}
+                  xs={{ span: 8, offset: 2 }}
+                >
+                  <h2 className="text-center ft-30 fw-bold mb-3 mt-5 text-danger">
+                    Celebrate with Morning Bakery Food!
+                  </h2>
+                  <h6 className="text-justify ft-16 fw-normal mb-3 mt-4 text-color-b94">
+                    Celebrate any occasion with our delicious and beautiful
+                    cake. Choose your favorite design and flavor.
+                  </h6>
+                </Col>
+              </Row>
+              <Row className="py-3">
+                <Col
+                  md={{ span: 6, offset: 3 }}
+                  sm={{ span: 6, offset: 3 }}
+                  xs={{ span: 12, offset: 1 }}
+                  className="justify-content-center"
+                >
+                  <Row>
+                    <Col md="6" sm="6" xs="6">
+                      <Button
+                        href="/products/cake"
+                        variant="danger"
+                        className="rounded-0"
+                      >
+                        <span className="ft-16 ft-normal">View More</span>
+                      </Button>
+                    </Col>
+                    <Col md="6" sm="6" xs="6">
+                      <Button
+                        href="/products/all-items"
+                        variant="outline-dark"
+                        className="rounded-0"
+                      >
+                        <span className="ft-16 ft-normal">Go to Shop</span>
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        )}
       </BaseContainer>
     </>
   );
